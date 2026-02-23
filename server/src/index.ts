@@ -48,14 +48,10 @@ async function bootstrap() {
 
   // ── Per-connection handler registration ────────────────────────────────────
   io.on("connection", (socket) => {
-    console.log(`[+] Socket connected: ${socket.id}`);
-
     registerRoomHandlers(io, socket, mm);
     registerGameHandlers(io, socket, gsm);
 
-    socket.on("disconnect", (reason) => {
-      console.log(`[-] Socket disconnected: ${socket.id} — ${reason}`);
-    });
+    socket.on("disconnect", (reason) => {});
   });
 
   app.use("", router(gsm));

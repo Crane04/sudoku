@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "dev": "NODE_ENV=dev nodemon --legacy-watch ./src/index.ts"
+    "dev": "NODE_ENV=dev nodemon --legacy-watch ./src/index.ts",
+    "start": "NODE_ENV=prod nodemon --legacy-watch ./src/index.ts"
   },
   "keywords": [],
   "author": "",

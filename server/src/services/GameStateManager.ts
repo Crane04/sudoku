@@ -79,7 +79,6 @@ export class GameStateManager {
   ): MoveResult {
     const room = this.rooms.get(roomId);
     const rooms = this.rooms;
-    console.log(rooms);
 
     if (!room) {
       return {
@@ -415,29 +414,17 @@ export class GameStateManager {
       opponentProgress: number;
     }> = [];
 
-    console.log(`🔍 Looking for games for player: ${displayName}`);
-    console.log(`📊 Total active rooms: ${this.rooms.size}`);
-
     for (const [roomId, room] of this.rooms.entries()) {
-      console.log(`Room ${roomId}:`, {
-        status: room.status,
-        players: room.players.map((p) =>
-          p ? { id: p.id, name: p.displayName } : null,
-        ),
-      });
-
       // Search by displayName (since that's what you're passing)
       const playerIndex = room.players.findIndex(
         (p) => p?.displayName === displayName,
       );
 
       if (playerIndex === -1) {
-        console.log(`  → Player ${displayName} not in this room`);
         continue;
       }
 
       if (room.status === "finished") {
-        console.log(`  → Room is finished, skipping`);
         continue;
       }
 
@@ -446,7 +433,6 @@ export class GameStateManager {
       );
 
       if (!opponent) {
-        console.log(`  → No opponent found`);
         continue;
       }
 
@@ -461,13 +447,8 @@ export class GameStateManager {
         myProgress,
         opponentProgress,
       });
-
-      console.log(
-        `  ✅ Found active game: ${roomId} vs ${opponent.displayName}`,
-      );
     }
 
-    console.log(`📱 Returning ${games.length} games for player ${displayName}`);
     return games;
   }
 }

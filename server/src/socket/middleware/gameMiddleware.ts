@@ -28,7 +28,6 @@ export function applyGameMiddleware(io: Server, gsm: GameStateManager): void {
       if (event !== "move_made") return; // Only guard game moves
 
       const roomId = gsm.getRoomIdBySocket(socket.playerId);
-      console.log({ roomId });
 
       if (!roomId) {
         socket.emit("error", {

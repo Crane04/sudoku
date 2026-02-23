@@ -65,7 +65,6 @@ export function registerGameHandlers(
 
   // ── Explicit leave ────────────────────────────────────────────────────────
   socket.on("leave_room", () => {
-    console.log("leaving");
     handlePlayerExit(io, socket, gsm);
   });
 
@@ -146,12 +145,9 @@ function emitVictoryDeclared(
   });
 
   setTimeout(() => {
-    console.log("🧹 Cleaning up room:", roomId);
-    console.log("Rooms before:", gsm.rooms.size);
     io.socketsLeave(roomId);
     gsm.removeRoomFromSocketMap(roomId);
     gsm.rooms.delete(roomId);
-    console.log("Rooms after:", gsm.rooms.size);
   }, 5000);
 }
 
@@ -170,10 +166,7 @@ function handlePlayerExit(
 
   socket.leave(room.roomId);
 
-  console.log("🧹 Cleaning up room:", room.roomId);
-  console.log("Rooms before:", gsm.rooms.size);
   io.socketsLeave(room.roomId);
   gsm.removeRoomFromSocketMap(room.roomId);
   gsm.rooms.delete(room.roomId);
-  console.log("Rooms after:", gsm.rooms.size);
 }
