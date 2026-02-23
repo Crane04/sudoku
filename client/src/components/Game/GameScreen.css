@@ -1,0 +1,196 @@
+/* src/components/Game/GameScreen.css
+   Full-screen game shell: header, main board area, banners.
+   BoardGrid and overlay CSS are in their own files.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+@import "../../styles/tokens.css";
+@import "../shared/shared.css";
+
+/* ── Game screen shell ─────────────────────────────────────────────────────── */
+
+.game-screen {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface-0);
+  /* Atmospheric radial lift — same as body but warmer at the top */
+  background-image: radial-gradient(
+    ellipse 100% 40% at 50% 0%,
+    rgba(30, 48, 70, 0.55) 0%,
+    transparent 65%
+  );
+  animation: pageEnter var(--duration-page) var(--ease-out-expo) both;
+}
+
+/* ── Game header ───────────────────────────────────────────────────────────── */
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  background: rgba(13, 18, 25, 0.85);
+  border-bottom: 1px solid var(--color-border-ghost);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-raised);
+  /* Ensure it sits above the board on scroll */
+}
+
+/* Wordmark — compact game version */
+.game-header__brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.15em;
+  font-family: var(--font-display);
+  font-weight: var(--weight-black);
+  font-size: var(--text-lg);
+  line-height: 1;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.game-header__sudo {
+  color: var(--color-text-primary);
+  letter-spacing: var(--tracking-tight);
+}
+
+.game-header__race {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-amber-500);
+  letter-spacing: 0.05em;
+}
+
+/* Centre cluster: difficulty badge + clock */
+.game-header__centre {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1;
+  justify-content: center;
+}
+
+.game-header__clock {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-text-dim);
+  font-variant-numeric: tabular-nums;
+  transition: color var(--duration-slow) ease;
+}
+
+/* Clock pulses amber once the race is live */
+.game-header__clock--active {
+  color: var(--color-text-primary);
+  animation: clockTick 60s linear infinite;
+}
+
+@keyframes clockTick {
+  /* Subtle brightness breathe on the minute mark */
+  0%,
+  99% {
+    filter: brightness(1);
+  }
+  100% {
+    filter: brightness(1.4);
+  }
+}
+
+/* Right actions */
+.game-header__actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 5rem;
+  justify-content: flex-end;
+}
+
+/* Forfeit button — arms on first click, confirms on second */
+/* The `.btn--danger` variant from shared.css handles the armed state colour */
+
+/* ── Main content area ─────────────────────────────────────────────────────── */
+
+.game-screen__main {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  /* Let the BoardGrid scroll on very small screens */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ── Connection lost banner ────────────────────────────────────────────────── */
+
+.connection-banner {
+  position: fixed;
+  top: var(--space-5);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-5) var(--space-2) var(--space-3);
+  background: rgba(13, 18, 25, 0.95);
+  border: 1px solid rgba(224, 85, 85, 0.4);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-lg);
+  white-space: nowrap;
+  animation: bannerDrop var(--duration-enter) var(--ease-out-expo) both;
+  pointer-events: none; /* non-interactive — info only */
+}
+
+@keyframes bannerDrop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.connection-banner__msg {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  color: rgba(221, 208, 184, 0.75);
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .game-header {
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .game-header__brand {
+    font-size: var(--text-md);
+  }
+  .game-header__clock {
+    font-size: var(--text-md);
+  }
+  .game-header__actions {
+    min-width: 4rem;
+  }
+
+  /* On very small screens, hide the difficulty badge to save space */
+  .game-header__centre .badge {
+    display: none;
+  }
+}
+
+@media (min-width: 900px) {
+  .game-screen__main {
+    /* On wide screens, add padding so board floats with breathing room */
+    padding: var(--space-6) 0;
+  }
+}

@@ -1,0 +1,454 @@
+/* src/components/Countdown/CountdownOverlay.css
+   Cinematic 3-2-1-GO countdown overlay.
+   Backdrop, spotlight, SVG ring, digit frames, particle burst, matchup banner.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+@import "../../styles/tokens.css";
+@import "../shared/shared.css";
+
+/* ── Overlay shell ─────────────────────────────────────────────────────────── */
+
+.cd-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Block all interaction with the board beneath */
+  pointer-events: all;
+  animation: cdOverlayIn var(--duration-enter) var(--ease-out-expo) both;
+}
+
+.cd-overlay--exiting {
+  animation: cdOverlayOut 0.42s var(--ease-in-expo) both;
+  pointer-events: none;
+}
+
+@keyframes cdOverlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cdOverlayOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.06);
+    filter: blur(4px);
+  }
+}
+
+/* ── Frosted backdrop ──────────────────────────────────────────────────────── */
+
+.cd-backdrop {
+  position: absolute;
+  inset: 0;
+  /* Let the board show through, desaturated, so players can scan clues */
+  background: rgba(7, 9, 15, 0.78);
+  backdrop-filter: blur(2px) saturate(0.35) brightness(0.7);
+  -webkit-backdrop-filter: blur(2px) saturate(0.35) brightness(0.7);
+}
+
+/* ── Coloured spotlight — shifts per step ──────────────────────────────────── */
+
+.cd-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: background 0.5s ease;
+}
+
+.cd-spotlight--step-3 {
+  background: radial-gradient(
+    ellipse 55% 45% at 50% 50%,
+    rgba(245, 166, 35, 0.07) 0%,
+    transparent 70%
+  );
+}
+.cd-spotlight--step-2 {
+  background: radial-gradient(
+    ellipse 55% 45% at 50% 50%,
+    rgba(74, 144, 217, 0.07) 0%,
+    transparent 70%
+  );
+}
+.cd-spotlight--step-1 {
+  background: radial-gradient(
+    ellipse 55% 45% at 50% 50%,
+    rgba(224, 85, 85, 0.09) 0%,
+    transparent 70%
+  );
+}
+.cd-spotlight--step-0 {
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 50%,
+    rgba(76, 175, 128, 0.12) 0%,
+    transparent 70%
+  );
+}
+
+/* ── Decorative grid lines ─────────────────────────────────────────────────── */
+
+.cd-grid-lines {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cd-grid-line {
+  flex: 1;
+  border-right: 1px solid rgba(74, 100, 140, 0.07);
+  animation: cdLineReveal 0.6s var(--ease-out-expo) both;
+}
+
+.cd-grid-line:nth-child(1) {
+  animation-delay: 0s;
+}
+.cd-grid-line:nth-child(2) {
+  animation-delay: 0.04s;
+}
+.cd-grid-line:nth-child(3) {
+  animation-delay: 0.08s;
+}
+.cd-grid-line:nth-child(4) {
+  animation-delay: 0.12s;
+}
+.cd-grid-line:nth-child(5) {
+  animation-delay: 0.16s;
+}
+.cd-grid-line:nth-child(6) {
+  animation-delay: 0.2s;
+}
+.cd-grid-line:nth-child(7) {
+  animation-delay: 0.24s;
+}
+.cd-grid-line:nth-child(8) {
+  animation-delay: 0.28s;
+}
+.cd-grid-line:nth-child(9) {
+  animation-delay: 0.32s;
+}
+
+@keyframes cdLineReveal {
+  from {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: center;
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+/* ── Content column ────────────────────────────────────────────────────────── */
+
+.cd-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  width: 100%;
+  max-width: 420px;
+  padding: 0 var(--space-6);
+}
+
+/* ── Matchup banner ────────────────────────────────────────────────────────── */
+
+.cd-banner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  padding: var(--space-4) var(--space-5);
+  background: rgba(17, 24, 39, 0.88);
+  border: 1px solid var(--color-border-mid);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(4px);
+  animation: cdBannerIn 0.5s var(--ease-out-expo) 0.1s both;
+}
+
+@keyframes cdBannerIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cd-banner__player {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.cd-banner__player--you {
+  align-items: flex-start;
+}
+.cd-banner__player--opp {
+  align-items: flex-end;
+}
+
+.cd-banner__role {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-text-ghost);
+}
+
+.cd-banner__name {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-primary);
+  max-width: 12ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cd-banner__player--you .cd-banner__name {
+  color: var(--color-amber-400);
+}
+
+.cd-banner__centre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.cd-banner__vs {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  font-style: italic;
+  color: var(--color-text-dim);
+}
+
+.cd-banner__diff {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-text-ghost);
+}
+
+/* ── Digit stage ───────────────────────────────────────────────────────────── */
+
+.cd-stage {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Digit frame ───────────────────────────────────────────────────────────── */
+
+.cd-digit-frame {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Visible state — plays enter animation */
+.cd-digit-frame--visible {
+  animation: cdDigitIn 0.32s var(--ease-out-back) both;
+  opacity: 1;
+}
+
+/* Hidden state — play exit animation then stay invisible */
+.cd-digit-frame--hidden {
+  animation: cdDigitOut 0.18s var(--ease-in-expo) both;
+  opacity: 0;
+}
+
+@keyframes cdDigitIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes cdDigitOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
+/* ── Digit value ───────────────────────────────────────────────────────────── */
+
+.cd-digit-frame__value {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-size: 7rem;
+  font-weight: var(--weight-black);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition:
+    color 0.2s ease,
+    text-shadow 0.2s ease;
+}
+
+/* Per-step colours */
+.cd-digit-frame--3 .cd-digit-frame__value {
+  color: var(--color-amber-500);
+  text-shadow: 0 0 48px var(--color-amber-glow);
+}
+.cd-digit-frame--2 .cd-digit-frame__value {
+  color: var(--color-steel-400);
+  text-shadow: 0 0 48px var(--color-steel-glow);
+}
+.cd-digit-frame--1 .cd-digit-frame__value {
+  color: var(--color-error);
+  text-shadow: 0 0 48px var(--color-error-glow);
+}
+
+/* GO — larger feel, green */
+.cd-digit-frame--go .cd-digit-frame__value {
+  font-size: 5.5rem;
+  letter-spacing: 0.08em;
+  color: var(--color-success);
+  text-shadow: 0 0 60px var(--color-success-glow);
+  animation: cdGoFlash 0.65s var(--ease-out-back) both;
+}
+
+@keyframes cdGoFlash {
+  0% {
+    transform: scale(0.65);
+    opacity: 0;
+  }
+  45% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ── SVG ring ──────────────────────────────────────────────────────────────── */
+
+.cd-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* The fill circle drains (dashoffset 0 → full circumference) over 1 second */
+.cd-ring__fill {
+  animation: cdRingDrain 1s linear both;
+  will-change: stroke-dashoffset;
+}
+
+@keyframes cdRingDrain {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 327;
+  }
+}
+
+/* ── Particle burst ────────────────────────────────────────────────────────── */
+/* 28 particles — each positioned via CSS custom properties set inline */
+
+.cd-particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--cd-size);
+  height: var(--cd-size);
+  border-radius: 50%;
+  background: var(--cd-color);
+  pointer-events: none;
+  animation: cdParticleBurst 0.75s var(--ease-out-expo) var(--cd-delay) both;
+}
+
+@keyframes cdParticleBurst {
+  0% {
+    transform: translate(-50%, -50%) rotate(var(--cd-angle)) translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(var(--cd-angle))
+      translateX(var(--cd-dist));
+    opacity: 0;
+  }
+}
+
+/* ── Hint text ─────────────────────────────────────────────────────────────── */
+
+.cd-hint {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-ghost);
+  text-align: center;
+  animation: fadeIn var(--duration-slow) var(--ease-out-expo) both;
+  min-height: 1.4em;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .cd-stage {
+    width: 140px;
+    height: 140px;
+  }
+  .cd-digit-frame__value {
+    font-size: 5.5rem;
+  }
+  .cd-digit-frame--go .cd-digit-frame__value {
+    font-size: 4rem;
+  }
+  .cd-banner {
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-3);
+  }
+  .cd-banner__name {
+    font-size: var(--text-sm);
+    max-width: 10ch;
+  }
+  .cd-content {
+    gap: var(--space-6);
+  }
+}

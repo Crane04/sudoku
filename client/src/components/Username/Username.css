@@ -1,0 +1,151 @@
+/* src/components/Username/Username.css */
+
+.username {
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Variants */
+.username--display {
+  background: linear-gradient(135deg, #667eea0a 0%, #764ba20a 100%);
+  border-radius: 16px;
+  border: 1px solid #e0e0e0;
+  padding: 1.25rem;
+}
+
+.username--badge {
+  background: white;
+  border-radius: 100px;
+  border: 1px solid #e0e0e0;
+  padding: 0.35rem 1rem;
+  width: auto;
+  display: inline-flex;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.username--compact {
+  background: transparent;
+  padding: 0;
+  border: none;
+}
+
+/* Sizes */
+.username--small .username__content {
+  gap: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.username--small .username__emoji {
+  font-size: 1.1rem;
+}
+
+.username--medium .username__content {
+  gap: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.username--medium .username__emoji {
+  font-size: 1.35rem;
+}
+
+.username--large .username__content {
+  gap: 0.75rem;
+  font-size: 1.35rem;
+}
+
+.username--large .username__emoji {
+  font-size: 2rem;
+}
+
+/* Elements */
+.username__label {
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.username__content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.username__emoji {
+  line-height: 1;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.username__text {
+  font-weight: 600;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  word-break: break-word;
+  line-height: 1.3;
+}
+
+/* Badge variant specific */
+.username--badge .username__content {
+  gap: 0.35rem;
+}
+
+.username--badge .username__text {
+  font-size: 0.9rem;
+  background: #4a5568; /* Solid color for badges */
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: #4a5568;
+  background: none;
+  color: #4a5568;
+}
+
+.username--badge .username__emoji {
+  font-size: 1rem;
+}
+
+/* Compact variant specific */
+.username--compact .username__content {
+  gap: 0.25rem;
+}
+
+.username--compact .username__text {
+  background: none;
+  -webkit-text-fill-color: #4a5568;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+/* Hover effects for interactive contexts */
+.username--badge:hover {
+  background: #f7fafc;
+  border-color: #667eea;
+  transition: all 0.2s ease;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .username--display {
+    background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+    border-color: #4a5568;
+  }
+
+  .username--badge {
+    background: #2d3748;
+    border-color: #4a5568;
+  }
+
+  .username--badge .username__text {
+    color: #e2e8f0;
+  }
+
+  .username__label {
+    color: #a0aec0;
+  }
+}

@@ -1,0 +1,165 @@
+/* =============================================================================
+   src/styles/tokens.css
+   SUDO·RACE — "Tournament Hall" Design Token System
+   Import this FIRST in global.css. Never hardcode values elsewhere.
+   ============================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;0,800;1,600;1,700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap');
+
+:root {
+
+  /* ── Surfaces ────────────────────────────────────────────────────────────── */
+  /* Deep navy-blacks layered like parchment on obsidian                        */
+  --color-void:       #07090f;   /* true background — deepest layer            */
+  --color-surface-0:  #0c1018;   /* page background                            */
+  --color-surface-1:  #111827;   /* card / panel base                          */
+  --color-surface-2:  #182030;   /* elevated element (input bg, cell bg)       */
+  --color-surface-3:  #1f2d40;   /* hover state surface                        */
+  --color-surface-4:  #263548;   /* active / selected surface                  */
+
+  /* ── Borders ─────────────────────────────────────────────────────────────── */
+  --color-border-ghost:  rgba(74, 100, 140, 0.12);  /* hairline separators     */
+  --color-border-faint:  rgba(74, 100, 140, 0.22);  /* card borders at rest    */
+  --color-border-mid:    rgba(74, 100, 140, 0.40);  /* hover borders           */
+  --color-border-strong: rgba(74, 100, 140, 0.65);  /* focus, active borders   */
+
+  /* ── Text ────────────────────────────────────────────────────────────────── */
+  --color-text-primary:  #ddd0b8;   /* cream-warm — primary readable text      */
+  --color-text-dim:      #8a96a8;   /* secondary labels, hints                 */
+  --color-text-ghost:    #3d4e60;   /* placeholder, decorative                 */
+  --color-text-invert:   #07090f;   /* text on bright accent backgrounds       */
+
+  /* ── Amber — primary accent (you, victory, highlights) ───────────────────── */
+  --color-amber-200:  #fde9b4;
+  --color-amber-400:  #f7bc57;
+  --color-amber-500:  #f5a623;   /* ← main accent                             */
+  --color-amber-600:  #d4891a;
+  --color-amber-900:  #3d2506;   /* amber tint surface                         */
+  --color-amber-glow: rgba(245, 166, 35, 0.18);
+  --color-amber-halo: rgba(245, 166, 35, 0.08);
+
+  /* ── Steel — opponent / secondary accent ─────────────────────────────────── */
+  --color-steel-300:  #93bce0;
+  --color-steel-400:  #5a8fc0;
+  --color-steel-500:  #3a6fa0;
+  --color-steel-900:  #0d2035;
+  --color-steel-glow: rgba(90, 143, 192, 0.15);
+
+  /* ── Semantic ────────────────────────────────────────────────────────────── */
+  --color-success:      #4caf80;
+  --color-success-glow: rgba(76, 175, 128, 0.20);
+  --color-success-dim:  #1a3d2a;
+
+  --color-error:        #e05555;
+  --color-error-glow:   rgba(224, 85, 85, 0.18);
+  --color-error-dim:    #3a1212;
+
+  --color-warning:      #e8a030;
+  --color-info:         #5a8fc0;
+
+  /* ── Typography ──────────────────────────────────────────────────────────── */
+  --font-display: 'Cormorant Garamond', 'Georgia', serif;
+  --font-mono:    'DM Mono', 'Fira Code', 'Courier New', monospace;
+
+  /* Scale — major third (1.250) */
+  --text-xs:   0.64rem;    /*  ~10px */
+  --text-sm:   0.75rem;    /*  ~12px */
+  --text-base: 0.875rem;   /*  ~14px */
+  --text-md:   1rem;       /*  ~16px */
+  --text-lg:   1.25rem;    /*  ~20px */
+  --text-xl:   1.5rem;     /*  ~24px */
+  --text-2xl:  2rem;       /*  ~32px */
+  --text-3xl:  2.5rem;     /*  ~40px */
+  --text-4xl:  3.5rem;     /*  ~56px */
+  --text-hero: clamp(4rem, 12vw, 7rem);
+
+  --tracking-tight:  -0.02em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.06em;
+  --tracking-wider:   0.12em;
+  --tracking-widest:  0.20em;
+
+  --leading-tight:  1.1;
+  --leading-snug:   1.35;
+  --leading-normal: 1.6;
+
+  --weight-light:   300;
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-bold:    700;
+  --weight-black:   800;
+
+  /* ── Spacing — 4px base grid ─────────────────────────────────────────────── */
+  --space-1:  0.25rem;   /*  4px */
+  --space-2:  0.5rem;    /*  8px */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1rem;      /* 16px */
+  --space-5:  1.25rem;   /* 20px */
+  --space-6:  1.5rem;    /* 24px */
+  --space-8:  2rem;      /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+  --space-20: 5rem;      /* 80px */
+
+  /* ── Border radius ───────────────────────────────────────────────────────── */
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   6px;
+  --radius-lg:   10px;
+  --radius-xl:   16px;
+  --radius-pill: 999px;
+
+  /* ── Shadows ─────────────────────────────────────────────────────────────── */
+  --shadow-sm:
+    0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md:
+    0 4px 16px rgba(0, 0, 0, 0.5),
+    0 1px 3px  rgba(0, 0, 0, 0.4);
+  --shadow-lg:
+    0 12px 40px rgba(0, 0, 0, 0.6),
+    0 2px  8px  rgba(0, 0, 0, 0.4);
+  --shadow-xl:
+    0 24px 64px rgba(0, 0, 0, 0.7),
+    0 4px  16px rgba(0, 0, 0, 0.5);
+
+  --shadow-amber:
+    0 0 20px var(--color-amber-glow),
+    0 0 48px var(--color-amber-halo);
+  --shadow-steel:
+    0 0 20px var(--color-steel-glow);
+  --shadow-success:
+    0 0 16px var(--color-success-glow);
+
+  /* ── Z-index scale ───────────────────────────────────────────────────────── */
+  --z-base:     0;
+  --z-raised:   10;
+  --z-overlay:  50;
+  --z-modal:    100;
+  --z-toast:    200;
+
+  /* ── Motion ──────────────────────────────────────────────────────────────── */
+  --ease-out-expo:   cubic-bezier(0.16, 1, 0.30, 1);
+  --ease-out-back:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-expo:    cubic-bezier(0.70, 0, 0.84, 0);
+  --ease-in-out:     cubic-bezier(0.45, 0, 0.55, 1);
+
+  --duration-fast:   120ms;
+  --duration-base:   200ms;
+  --duration-slow:   350ms;
+  --duration-enter:  420ms;
+  --duration-page:   480ms;
+
+  /* ── Board-specific ──────────────────────────────────────────────────────── */
+  --cell-size:       52px;
+  --cell-size-sm:    38px;   /* mobile */
+  --board-border:    2px solid var(--color-border-strong);
+  --board-box-line:  2px solid rgba(74, 100, 140, 0.55);
+  --board-cell-line: 1px solid var(--color-border-faint);
+}
+
+/* ── Dark-mode baseline (already dark, this is for any forced-light OS) ────── */
+@media (prefers-color-scheme: light) {
+  /* We intentionally stay dark — Sudo-Race is a night-game aesthetic */
+  :root { color-scheme: dark; }
+}

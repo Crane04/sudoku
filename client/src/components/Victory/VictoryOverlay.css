@@ -1,0 +1,312 @@
+/* src/components/Victory/VictoryOverlay.css
+   Win/loss result card.
+   Amber for victory, steel for defeat.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+@import "../../styles/tokens.css";
+@import "../shared/shared.css";
+
+/* ── Overlay shell ─────────────────────────────────────────────────────────── */
+
+.victory-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  animation: victoryOverlayIn var(--duration-enter) var(--ease-out-expo) both;
+}
+
+@keyframes victoryOverlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Backdrop ──────────────────────────────────────────────────────────────── */
+
+.victory-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 9, 15, 0.85);
+  backdrop-filter: blur(4px) saturate(0.5);
+  -webkit-backdrop-filter: blur(4px) saturate(0.5);
+}
+
+/* ── Coloured spotlight ────────────────────────────────────────────────────── */
+
+.victory-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.victory-spotlight--win {
+  background: radial-gradient(
+    ellipse 70% 50% at 50% 50%,
+    rgba(245, 166, 35, 0.08) 0%,
+    transparent 65%
+  );
+}
+
+.victory-spotlight--loss {
+  background: radial-gradient(
+    ellipse 70% 50% at 50% 50%,
+    rgba(74, 144, 217, 0.07) 0%,
+    transparent 65%
+  );
+}
+
+/* ── Card ──────────────────────────────────────────────────────────────────── */
+
+.victory-card {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-12) var(--space-10);
+  background: var(--color-surface-1);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  text-align: center;
+  width: 100%;
+  max-width: 440px;
+  animation: victoryCardIn 0.55s var(--ease-out-back) 0.05s both;
+}
+
+@keyframes victoryCardIn {
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Victory border glow */
+.victory-card--win {
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  box-shadow:
+    var(--shadow-xl),
+    0 0 0 1px rgba(245, 166, 35, 0.12),
+    0 0 80px rgba(245, 166, 35, 0.06);
+}
+
+/* Defeat border — subtler steel */
+.victory-card--loss {
+  border: 1px solid var(--color-border-mid);
+}
+
+/* ── Hero glyph ────────────────────────────────────────────────────────────── */
+
+.victory-card__glyph {
+  font-size: 3.5rem;
+  line-height: 1;
+  animation: victoryGlyphIn 0.6s var(--ease-out-back) 0.15s both;
+}
+
+@keyframes victoryGlyphIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5) rotate(-20deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Win glyph pulses amber */
+.victory-card--win .victory-card__glyph {
+  color: var(--color-amber-400);
+  animation:
+    victoryGlyphIn 0.6s var(--ease-out-back) 0.15s both,
+    victoryGlowPulse 2.4s ease-in-out 0.8s infinite;
+}
+
+@keyframes victoryGlowPulse {
+  0%,
+  100% {
+    filter: brightness(1) drop-shadow(0 0 8px rgba(245, 166, 35, 0.4));
+  }
+  50% {
+    filter: brightness(1.3) drop-shadow(0 0 20px rgba(245, 166, 35, 0.7));
+  }
+}
+
+/* Loss glyph — muted steel */
+.victory-card--loss .victory-card__glyph {
+  color: var(--color-text-dim);
+}
+
+/* ── Title ─────────────────────────────────────────────────────────────────── */
+
+.victory-card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  animation: fadeIn var(--duration-enter) var(--ease-out-expo) 0.2s both;
+}
+
+.victory-card--win .victory-card__title {
+  color: var(--color-amber-200);
+}
+.victory-card--loss .victory-card__title {
+  color: var(--color-text-primary);
+}
+
+/* ── Subtitle ──────────────────────────────────────────────────────────────── */
+
+.victory-card__subtitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-dim);
+  animation: fadeIn var(--duration-enter) var(--ease-out-expo) 0.28s both;
+}
+
+/* ── Player result rows ────────────────────────────────────────────────────── */
+
+.victory-results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  animation: fadeIn var(--duration-enter) var(--ease-out-expo) 0.35s both;
+}
+
+.result-player {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-faint);
+  border-radius: var(--radius-md);
+}
+
+.result-player--winner {
+  border-color: rgba(245, 166, 35, 0.25);
+  background: rgba(61, 37, 6, 0.4);
+}
+
+.result-player--me.result-player--winner {
+  border-color: rgba(245, 166, 35, 0.45);
+  background: rgba(61, 37, 6, 0.65);
+}
+
+.result-player__glyph {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.result-player--winner .result-player__glyph {
+  color: var(--color-amber-400);
+}
+.result-player--loser .result-player__glyph {
+  color: var(--color-text-ghost);
+}
+
+.result-player__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.result-player__name {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 18ch;
+}
+
+.result-player--winner .result-player__name {
+  color: var(--color-amber-400);
+}
+
+.result-player__stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.result-player__cells,
+.result-player__time {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-dim);
+}
+
+.result-player__time {
+  color: var(--color-amber-500);
+  font-weight: var(--weight-medium);
+}
+
+.result-player__badge {
+  flex-shrink: 0;
+}
+
+/* VS divider */
+.victory-results__divider {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-text-ghost);
+  text-align: center;
+  user-select: none;
+}
+
+/* ── Actions ───────────────────────────────────────────────────────────────── */
+
+.victory-card__actions {
+  display: flex;
+  gap: var(--space-3);
+  width: 100%;
+  animation: fadeIn var(--duration-enter) var(--ease-out-expo) 0.45s both;
+}
+
+.victory-card__actions .btn {
+  flex: 1;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .victory-card {
+    padding: var(--space-8) var(--space-6);
+    gap: var(--space-5);
+  }
+
+  .victory-card__title {
+    font-size: var(--text-3xl);
+  }
+  .victory-card__glyph {
+    font-size: 2.8rem;
+  }
+
+  .result-player {
+    padding: var(--space-3) var(--space-4);
+  }
+  .result-player__name {
+    max-width: 14ch;
+  }
+}
