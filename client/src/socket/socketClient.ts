@@ -14,6 +14,7 @@ import type {
   ServerToClientEvents,
   Difficulty,
 } from "../types/game";
+import BASE_URL from "../constants/server";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -29,7 +30,7 @@ let socket: TypedSocket | null = null;
  */
 export function getSocket(): TypedSocket {
   if (!socket) {
-    socket = io(import.meta.env.VITE_SERVER_URL ?? "http://localhost:3001", {
+    socket = io(BASE_URL, {
       // Manual connect — we call connectSocket() in Lobby on mount,
       // so the socket is not open until the user actually arrives.
       autoConnect: false,

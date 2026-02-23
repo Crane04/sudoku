@@ -11,8 +11,6 @@ export function OngoingGames() {
   const { games, loading, error } = useOngoingGames();
   const { username, isLoading } = useUsername();
 
-  console.log("fetching ongoing games", games);
-
   if (loading) {
     return (
       <div className="ongoing-loading">

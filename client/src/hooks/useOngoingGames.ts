@@ -1,6 +1,7 @@
 // src/hooks/useOngoingGames.ts
 import { useState, useEffect } from "react";
 import { useUsername } from "./usePersistedUsername";
+import BASE_URL from "../constants/server";
 
 interface OngoingGame {
   roomId: string;
@@ -23,21 +24,16 @@ export function useOngoingGames() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log(username, isLoading);
     if (!username) {
       setLoading(false);
       return;
     }
 
-    console.log(`http://localhost:3001/player/${username}/ongoing`);
-
     const fetchGames = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3001/player/${username}/ongoing`,
-        );
+        const response = await fetch(`${BASE_URL}/player/${username}/ongoing`);
         const data = await response.json();
-        console.log(data);
+
         if (data.success) {
           setGames(data.games);
         } else {
