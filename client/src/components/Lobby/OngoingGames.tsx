@@ -1,15 +1,11 @@
-// src/components/Lobby/OngoingGames.tsx
-import React from "react";
 import { useOngoingGames } from "../../hooks/useOngoingGames";
-import { useGameStore } from "../../store/gameStore";
 import { socketActions } from "../../socket/socketClient";
-import { Username } from "../Username/Username";
 import "./OngoingGames.css";
 import { useUsername } from "../../hooks/usePersistedUsername";
 
 export function OngoingGames() {
   const { games, loading, error } = useOngoingGames();
-  const { username, isLoading } = useUsername();
+  const { username } = useUsername();
 
   if (loading) {
     return (

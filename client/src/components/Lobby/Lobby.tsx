@@ -1,5 +1,5 @@
 // src/components/Lobby/Lobby.tsx
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useGameStore, selectPhase, selectError } from "../../store/gameStore";
 import { connectSocket, socketActions } from "../../socket/socketClient";
 import { getOrCreateUsername } from "../../utils/usernameGenerator"; // Add this import

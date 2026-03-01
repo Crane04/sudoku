@@ -1,5 +1,5 @@
 // src/hooks/useUsername.ts
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { getOrCreateUsername } from "../utils/usernameGenerator";
 
 // Store username in a module-level cache to avoid multiple localStorage reads
@@ -16,8 +16,6 @@ export function useUsername() {
     return newUsername;
   });
 
-  const [isLoading, setIsLoading] = useState(false);
-
   // Username is immutable - once generated, it never changes
   // But if you ever need to regenerate (rare), you could add a function for it
   const regenerateUsername = () => {
@@ -31,7 +29,7 @@ export function useUsername() {
 
   return {
     username,
-    isLoading,
+    isLoading: false,
     regenerateUsername, // Optional: useful for testing or if user wants to change
   };
 }

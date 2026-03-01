@@ -1,7 +1,3 @@
-// src/components/Lobby/HomeScreen.tsx
-
-import React from "react";
-
 interface HomeScreenProps {
   onPublic: () => void;
   onPrivateCreate: () => void;

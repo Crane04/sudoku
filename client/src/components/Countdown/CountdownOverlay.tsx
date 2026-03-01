@@ -1,25 +1,6 @@
-// src/components/Countdown/CountdownOverlay.tsx
-// ─────────────────────────────────────────────────────────────────────────────
-// Full-screen 3-2-1-GO countdown that sits on top of the already-mounted
-// BoardGrid. The board is visible but non-interactive beneath the frosted
-// backdrop — players orient themselves before the race starts.
-//
-// Timer is CLIENT-SIDE intentionally. Both players start their local countdown
-// the instant they receive game_start from the server. ±1 frame of jitter is
-// imperceptible and avoids the complexity of a server-synced clock.
-//
-// Sequence:
-//   mount → show 3 (ring drains over 1s) → show 2 → show 1
-//   → show GO (particle burst, 600ms hold) → onComplete() fires
-//   → GameScreen sets phase → 'in_progress' → overlay unmounts
-// ─────────────────────────────────────────────────────────────────────────────
-
 import React, { useEffect, useRef, useState } from "react";
 import "./CountdownOverlay.css";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-// 3 | 2 | 1 | 0 (0 = "GO")
 type CountStep = 3 | 2 | 1 | 0;
 
 interface CountdownOverlayProps {
@@ -28,9 +9,6 @@ interface CountdownOverlayProps {
   opponentName: string;
   difficulty: string;
 }
-
-// ─── Particle data ────────────────────────────────────────────────────────────
-// Computed once at module level — stable reference, no re-render cost.
 
 interface Particle {
   id: number;
@@ -58,9 +36,6 @@ const PARTICLES: Particle[] = Array.from({ length: 28 }, (_, i) => ({
   delay: Math.random() * 0.1,
 }));
 
-// ─── SVG ring — drains from full to empty over exactly 1 second ───────────────
-
-// SVG circle: r=52, circumference = 2π×52 ≈ 326.7
 const RING_CIRCUMFERENCE = 2 * Math.PI * 52;
 
 interface RingProps {
@@ -68,7 +43,7 @@ interface RingProps {
 }
 
 function Ring({ step }: RingProps) {
-  if (step === 0) return null; // no ring on GO
+  if (step === 0) return null;
 
   const colors: Record<Exclude<CountStep, 0>, string> = {
     3: "var(--color-amber-500)",
@@ -106,8 +81,6 @@ function Ring({ step }: RingProps) {
     </svg>
   );
 }
-
-// ─── Digit frame ──────────────────────────────────────────────────────────────
 
 interface DigitFrameProps {
   step: CountStep;
@@ -152,8 +125,6 @@ function DigitFrame({ step, visible }: DigitFrameProps) {
   );
 }
 
-// ─── Matchup banner ───────────────────────────────────────────────────────────
-
 function MatchupBanner({
   myName,
   opponentName,
@@ -186,17 +157,12 @@ function MatchupBanner({
   );
 }
 
-// ─── Hint text ────────────────────────────────────────────────────────────────
-// One hint per count step so the label changes with each digit.
-
 const HINTS: Record<CountStep, string> = {
   3: "Board locked — memorise the clues.",
   2: "Scan each 3×3 box for naked singles.",
   1: "First to 81 cells wins. Go fast.",
   0: "",
 };
-
-// ─── CountdownOverlay ─────────────────────────────────────────────────────────
 
 export function CountdownOverlay({
   onComplete,
@@ -208,30 +174,24 @@ export function CountdownOverlay({
   const [exiting, setExiting] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(0);
 
-  // Clear timer on unmount to prevent state updates after unmount
   useEffect(() => () => clearTimeout(timerRef.current), []);
 
   useEffect(() => {
     if (step > 1) {
-      // 3 → 2 → 1  each after 1000 ms
       timerRef.current = setTimeout(
         () => setStep((s) => (s - 1) as CountStep),
         1000,
       );
     } else if (step === 1) {
-      // 1 → GO  after 1000 ms
       timerRef.current = setTimeout(() => setStep(0), 1000);
     } else {
-      // GO — hold 600 ms then trigger exit animation, then fire onComplete
       timerRef.current = setTimeout(() => {
         setExiting(true);
-        // Fire onComplete after exit animation completes (~400 ms)
         setTimeout(onComplete, 420);
       }, 600);
     }
   }, [step, onComplete]);
 
-  // aria-live announcement — screen reader calls out the count
   const announcement = step === 0 ? "Go!" : `${step}`;
 
   return (

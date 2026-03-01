@@ -1,8 +1,5 @@
-// src/components/Lobby/PublicQueueScreen.tsx
-
 import type { Difficulty, GameError } from "../../types/game";
 import { DIFFICULTY_LABELS, DIFFICULTY_CLUES } from "../../types/game";
-import { UsernameBadge, UsernameDisplay } from "../Username/Username";
 
 interface PublicQueueScreenProps {
   displayName: string;
